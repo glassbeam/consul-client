@@ -175,7 +175,7 @@ public class ConsulCache<K, V> implements AutoCloseable {
                     scheduler.schedule(ConsulCache.this::runCallback,
                             timeToWait.toMillis(), TimeUnit.MILLISECONDS);
 
-                }
+                
             }
 
             @Override
