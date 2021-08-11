@@ -47,13 +47,10 @@
         <testcontainers.version>1.15.1</testcontainers.version>
     </properties>
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>glassbeam</id>
+            <name>glassbeam-jars</name>
+            <url>http://jnkserver.glassbeam.com:8081/repository/glassbeam-jars</url>
         </repository>
     </distributionManagement>
     <repositories>
