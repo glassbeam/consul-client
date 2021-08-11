@@ -118,7 +118,6 @@ public class ConsulCache<K, V> implements AutoCloseable {
             @Override
             public void onComplete(ConsulResponse<List<V>> consulResponse) {
 
-                if (consulResponse.isKnownLeader()) {
                     if (!isRunning()) {
                         return;
                     }
@@ -176,8 +175,6 @@ public class ConsulCache<K, V> implements AutoCloseable {
                     scheduler.schedule(ConsulCache.this::runCallback,
                             timeToWait.toMillis(), TimeUnit.MILLISECONDS);
 
-                } else {
-                    onFailure(new ConsulException("Consul cluster has no elected leader"));
                 }
             }
 
