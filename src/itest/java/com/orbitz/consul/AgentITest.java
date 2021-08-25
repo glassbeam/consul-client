@@ -13,6 +13,7 @@ import com.orbitz.consul.model.health.HealthCheck;
 import com.orbitz.consul.model.health.ImmutableService;
 import com.orbitz.consul.model.health.Service;
 import com.orbitz.consul.model.health.ServiceHealth;
+import com.orbitz.consul.model.health.ServiceIdHealth;
 import com.orbitz.consul.option.ImmutableQueryOptions;
 import com.orbitz.consul.option.ImmutableQueryParameterOptions;
 import com.orbitz.consul.option.QueryOptions;
@@ -435,6 +436,24 @@ public class AgentITest extends BaseIntegrationTest {
                 .build();
 
         assertEquals(expectedService, service.getResponse());
+    }
+
+    @Test
+    public void shouldGetServiceIdHealth() throws NotRegisteredException {
+        String id = UUID.randomUUID().toString();
+        String name = UUID.randomUUID().toString();
+        List<String> tags = Collections.singletonList(UUID.randomUUID().toString());
+        Map<String, String> meta = Collections.singletonMap(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        client.agentClient().register(8080, 20L, name, id, tags, meta);
+        Synchroniser.pause(Duration.ofMillis(100));
+        client.agentClient().pass(id);
+
+        ConsulResponse<ServiceIdHealth> serviceHealth = client.agentClient().getHealth(id,QueryOptions.BLANK);
+
+        assertEquals(serviceHealth.getResponse().getStatus(), "passing");
+        assertEquals(serviceHealth.getResponse().getService().getService(), name);
+
+
     }
 
     @Test

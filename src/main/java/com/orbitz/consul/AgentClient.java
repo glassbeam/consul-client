@@ -8,6 +8,7 @@ import com.orbitz.consul.model.State;
 import com.orbitz.consul.model.agent.*;
 import com.orbitz.consul.model.health.HealthCheck;
 import com.orbitz.consul.model.health.Service;
+import com.orbitz.consul.model.health.ServiceIdHealth;
 import com.orbitz.consul.monitoring.ClientEventCallback;
 import com.orbitz.consul.option.ImmutableQueryOptions;
 import com.orbitz.consul.option.QueryOptions;
@@ -433,6 +434,17 @@ public class AgentClient extends BaseClient {
     }
 
     /**
+     * Retrieves health status for given service id registered with the Agent.
+     * <p/>
+     * GET /agent/health/service/id
+     *
+     * @return Service health information.
+     */
+    public ConsulResponse<ServiceIdHealth> getHealth(String serviceId, QueryOptions queryOptions) {
+        return http.extractConsulResponse(api.getHealth(serviceId, queryOptions.toQuery()));
+    }
+
+    /**
      * Retrieves all checks registered with the Agent.
      * <p/>
      * GET /v1/agent/checks
@@ -758,6 +770,9 @@ public class AgentClient extends BaseClient {
 
         @GET("status/leader")
         Call<Void> ping();
+
+        @GET("agent/health/service/id/{serviceId}")
+        Call<ServiceIdHealth> getHealth(@Path("serviceId") String serviceId, @QueryMap Map<String, Object> query);
 
         @GET("agent/self")
         Call<Agent> getAgent();
