@@ -50,7 +50,7 @@
         <repository>
             <id>glassbeam</id>
             <name>glassbeam-jars</name>
-            <url>http://jnkserver.glassbeam.com:8081/repository/glassbeam-jars</url>
+	    <url>${nexus.url}/repository/glassbeam-jars</url>
         </repository>
     </distributionManagement>
     <repositories>
@@ -255,9 +255,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <release>${java.version}</release>
+		<version>3.8.1</version>
+		<configuration>
+		  <release>{java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
