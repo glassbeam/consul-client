@@ -4,7 +4,7 @@
     <groupId>com.orbitz.consul</groupId>
     <artifactId>consul-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.5.3-GB2</version>
+    <version>1.5.3-GB4</version>
     <name>consul-client</name>
     <url>http://maven.apache.org</url>
     <description>Consul Client for Java</description>
@@ -29,28 +29,29 @@
     </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
 
         <apache.commons.version>3.11</apache.commons.version>
         <commonscodec.version>1.15</commonscodec.version>
         <findbugs.version>1.3.9</findbugs.version>
-        <guava.version>30.0-jre</guava.version>
+        <guava.version>32.0.1-jre</guava.version>
         <immutables.version>2.8.8</immutables.version>
-        <jackson.version>2.13.5</jackson.version>
+        <jackson.version>2.17.3</jackson.version>
         <junit.version>4.13.1</junit.version>
         <junitparams.version>1.1.1</junitparams.version>
         <mockito.version>1.10.19</mockito.version>
         <retrofit.version>2.9.0</retrofit.version>
-        <okhttp.version>4.9.0</okhttp.version>
+        <okhttp.version>4.12.0</okhttp.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <logback.version>1.2.3</logback.version>
+        <logback.version>1.5.16</logback.version>
         <testcontainers.version>1.15.1</testcontainers.version>
     </properties>
     <distributionManagement>
         <repository>
-            <id>glassbeam</id>
-            <name>glassbeam-jars</name>
-	    <url>${nexus.url}/repository/glassbeam-jars/</url>
+	    <id>REPO_NAME-platform</id>
+	    <name>REPO_NAME-platform</name>
+	    <url>https://REPO_NAME-ACC_ID.d.codeartifact.us-east-1.amazonaws.com/maven/platform/</url>
+
         </repository>
     </distributionManagement>
     <repositories>
@@ -254,11 +255,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-		<version>3.8.1</version>
+		<artifactId>maven-compiler-plugin</artifactId>
 		<configuration>
-		  <release>${java.version}</release>
+                    <release>${java.version}</release>
                 </configuration>
+		<version>3.8.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -276,6 +277,15 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/versions/17/**</exclude>
+                                        <exclude>META-INF/versions/21/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>shaded</shadedClassifierName>
                             <transformers>
@@ -327,6 +337,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>add-test-source</id>
