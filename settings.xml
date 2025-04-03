@@ -1,9 +1,9 @@
 <settings>
     <servers>
 	<server>
-            <id>glassbeam</id>
-	    <username>${nexus.user}</username>
-	    <password>${nexus.password}</password>
+            <id>REPO_NAME-platform</id>
+            <username>aws</username>
+            <password>${env.CODEARTIFACT_AUTH_TOKEN}</password>
         </server>
     </servers>
 </settings>
